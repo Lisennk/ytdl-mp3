@@ -28,7 +28,7 @@ export class Downloader {
     this.verifyTags = Boolean(verifyTags);
   }
 
-  async downloadSong(url: string): Promise<string> {
+  async downloadSong(url: string, name: string): Promise<string> {
     if (!isDirectory(this.outputDir)) {
       throw new YtdlMp3Error(`Not a directory: ${this.outputDir}`);
     }
@@ -41,7 +41,7 @@ export class Downloader {
     const formatConverter = new FormatConverter();
     const songTagsSearch = new SongTagsSearch(videoInfo.videoDetails);
 
-    const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
+    const outputFile = this.getOutputFile(name);
     const videoData = await this.downloadVideo(videoInfo);
 
     formatConverter.videoToAudio(videoData, outputFile);
